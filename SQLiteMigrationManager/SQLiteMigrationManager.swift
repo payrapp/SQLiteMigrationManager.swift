@@ -38,15 +38,15 @@ public struct SQLiteMigrationManager {
      - migrations: An array of `Migration`. Defaults to `[]`.
      - bundle: An `NSBundle` containing SQL migrations. Defaults to `nil`.
    */
-  public init?(url: NSURL, migrations: [Migration] = [], bundle: NSBundle? = nil) {
-    do {
-      let db = try Connection(url.absoluteString)
-      self.init(db: db, migrations: migrations, bundle: bundle)
-    } catch {
-      return nil
+    public init?(url: NSURL, migrations: [Migration] = [], bundle: NSBundle? = nil) {
+        guard let urlAbsoluteString = url.absoluteString else { return nil }
+        do {
+            let db = try Connection(urlAbsoluteString)
+            self.init(db: db, migrations: migrations, bundle: bundle)
+        } catch {
+            return nil
+        }
     }
-  }
-
   /**
    Creates a new migration manager.
 
